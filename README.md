@@ -23,3 +23,15 @@ kafka-kafka-1  | [2022-04-21 22:07:03,262] INFO [KafkaServer id=1] started (kafk
 ```
 
 ```
+#### 이슈 : docker-compose로 kafka 수행오류 , local로 수행
+```
+C:\kafka_2.12-2.7.0\bin\windows\zookeeper-server-start.bat C:\kafka_2.12-2.7.0\config\zookeeper.properties  
+C:\kafka_2.12-2.7.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.7.0\config\server.properties   
+C:\kafka_2.12-2.7.0\bin\windows\kafka-topics.bat --create --topic userservice --bootstrap-server localhost:9092 --partitions 1
+C:\kafka_2.12-2.7.0\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic userservice --from-beginning
+
+C:\Users\kyk>C:\kafka_2.12-2.7.0\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic userservice --from-beginning
+{"eventType":"UserCreated","timestamp":1650816862758,"userId":"14cea77c-bccf-44a2-acde-ef5030bdad7f","status":"valid"}
+
+
+```

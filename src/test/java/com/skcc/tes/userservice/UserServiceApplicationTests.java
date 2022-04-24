@@ -1,4 +1,4 @@
-package com.demo.userservice;
+package com.skcc.tes.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

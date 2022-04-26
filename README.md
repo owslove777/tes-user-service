@@ -19,11 +19,13 @@ $ docker-compose logs kafka | grep -i started
 
 kafka-kafka-1  | [2022-04-21 22:07:03,262] INFO [KafkaServer id=1] started (kafka.server.KafkaServer)
 ```
-* Kafka consumer 접속
+* Kafka topic list 확인 및  consumer 접속
 ```
+./kafka-topics --bootstrap-server localhost:9092 --list
+./kafka-console-consumer --bootstrap-server localhost:9092 --topic userservice
 
 ```
-#### 이슈 : docker-compose로 kafka 수행오류 , local로 수행
+#### 이슈해결 : docker-compose로 kafka 수행오류해결 전  local로 수행
 ```
 C:\kafka_2.12-2.7.0\bin\windows\zookeeper-server-start.bat C:\kafka_2.12-2.7.0\config\zookeeper.properties  
 C:\kafka_2.12-2.7.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.7.0\config\server.properties   

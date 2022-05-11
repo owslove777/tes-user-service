@@ -23,19 +23,18 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/health_check")
     public String status() {
-        return String.format("It's Working in User Service");
+        return "It's Working in User Service";
     }
 
 
     @PostMapping("/user")
     public UserDto createUser(@RequestBody User src){
         
-        src.setUserId(UUID.randomUUID().toString());  //사용자ID 생성
+//        src.setUserId(UUID.randomUUID().toString());  //사용자ID 생성 // 자동 생성됩니다.
         return src.save();
     }
 
@@ -45,9 +44,7 @@ public class UserController {
 
         List<UserDto> result = new ArrayList<>();
 
-        userList.forEach(v -> {
-            result.add(new ModelMapper().map(v, UserDto.class));
-        });
+        userList.forEach(v -> result.add(new ModelMapper().map(v, UserDto.class)));
 
         return result;
 

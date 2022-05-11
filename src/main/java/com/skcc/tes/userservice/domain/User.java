@@ -11,14 +11,13 @@ import org.springframework.beans.BeanUtils;
 import javax.persistence.*;
 
 
-
-@Entity
+@Entity(name = "user")
+@Table(name = "user")
 @Setter
 @Getter
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     private String email;
@@ -29,8 +28,8 @@ public class User {
 
 
 
-    @PrePersist
-    public void onPrePersist() {
+    @PostPersist
+    public void onPostPersist() {
 
         UserCreated userCreated = new UserCreated();
         userCreated.setStatus("valid");

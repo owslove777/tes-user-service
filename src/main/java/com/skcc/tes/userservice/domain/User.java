@@ -11,8 +11,8 @@ import org.springframework.beans.BeanUtils;
 import javax.persistence.*;
 
 
-@Entity(name = "user")
-@Table(name = "user")
+@Entity(name = "tes_user")
+@Table(name = "tes_user")
 @Setter
 @Getter
 public class User {

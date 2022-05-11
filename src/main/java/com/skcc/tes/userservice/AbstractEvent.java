@@ -6,12 +6,9 @@ import com.skcc.tes.userservice.kafka.KafkaProcessor;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.springframework.util.MimeTypeUtils;
 
 public class AbstractEvent {
 
@@ -20,8 +17,8 @@ public class AbstractEvent {
 
     public AbstractEvent(){
         this.setEventType(this.getClass().getSimpleName());
-      //  SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
-      //  this.timestamp = defaultSimpleDateFormat.format(new Date());
+        // SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
+        // this.timestamp = defaultSimpleDateFormat.format(new Date());
         this.timestamp = System.currentTimeMillis();
     }
 
@@ -44,7 +41,7 @@ public class AbstractEvent {
             /**
              * spring streams 방식
              */
-            KafkaProcessor processor = UserServiceApplication.applicationContext.getBean(KafkaProcessor.class);
+            KafkaProcessor processor = UserServiceApplication.getApplicationContext().getBean(KafkaProcessor.class);
             MessageChannel outputChannel = processor.outboundTopic();
 
             outputChannel.send(MessageBuilder

@@ -28,8 +28,8 @@ public class User {
 
 
 
-
-    public void onPrePersist() {
+    @PostPersist
+    public void onPostPersist() {
 
         UserCreated userCreated = new UserCreated();
         userCreated.setStatus("valid");

@@ -38,14 +38,12 @@ public class AbstractEvent {
     public void publish(String json){
         if( json != null ){
 
-<<<<<<< Updated upstream
+
             /**
              * spring streams 방식
              */
             KafkaProcessor processor = UserServiceApplication.getApplicationContext().getBean(KafkaProcessor.class);
-=======
-            KafkaProcessor processor = UserServiceApplication.applicationContext.getBean(KafkaProcessor.class);
->>>>>>> Stashed changes
+
             MessageChannel outputChannel = processor.outboundTopic();
 
             outputChannel.send(MessageBuilder

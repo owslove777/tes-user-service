@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
-//@EnableAspectJAutoProxy
 @EnableBinding(KafkaProcessor.class)
 public class UserServiceApplication {
 

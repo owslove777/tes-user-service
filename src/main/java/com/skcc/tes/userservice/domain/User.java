@@ -29,7 +29,11 @@ public class User {
 
 
     @PostPersist
+<<<<<<< Updated upstream
     public void onPostPersist() {
+=======
+    public void onPrePersist() {
+>>>>>>> Stashed changes
 
         UserCreated userCreated = new UserCreated();
         userCreated.setStatus("valid");

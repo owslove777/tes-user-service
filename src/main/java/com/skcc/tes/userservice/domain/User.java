@@ -37,6 +37,7 @@ public class User {
         userCreated.setUserId(this.getUserId());
         BeanUtils.copyProperties(this,userCreated);
         userCreated.publishAfterCommit();
+        System.out.println("sending data=" + userCreated);
 
     }
 

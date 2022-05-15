@@ -13,7 +13,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: 192.168.0.1:9092
         streams:
           binder:
             configuration:
@@ -35,6 +35,11 @@ spring:
     username: root
     password: admin
     driverClassName: com.mysql.cj.jdbc.Driver
+tes:
+  token:
+    expiration_time: 1000000000
+    secret: secret
+
 logging:
   level:
     org.hibernate.type: trace

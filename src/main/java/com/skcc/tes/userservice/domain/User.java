@@ -4,8 +4,7 @@ package com.skcc.tes.userservice.domain;
 import com.skcc.tes.userservice.UserCreated;
 import com.skcc.tes.userservice.UserServiceApplication;
 import com.skcc.tes.userservice.dto.UserDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
@@ -15,6 +14,9 @@ import javax.persistence.*;
 @Table(name = "tes_user")
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +27,7 @@ public class User {
     private String pwd;
     private String userId;
     private String status;
+    private String imageUrl;
 
 
 

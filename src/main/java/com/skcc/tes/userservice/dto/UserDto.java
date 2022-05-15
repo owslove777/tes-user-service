@@ -14,6 +14,7 @@ public class UserDto {
     private String pwd;
     private String userId;
     private String status;
+    private String imageUrl;
 
 
 }

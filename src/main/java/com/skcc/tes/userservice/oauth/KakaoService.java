@@ -30,7 +30,7 @@ public class KakaoService {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", REST_API_KEY);
-        params.add("redirect_uri", REDIRECT_URI + "/oauth2/code/kakao");
+        params.add("redirect_uri", REDIRECT_URI);
         params.add("code", code);
         params.add("client_secret", "");
 

@@ -29,6 +29,8 @@ public class SocialService {
             socialDto.setName(name.substring(1, name.length() - 1));
             String imageUrl = String.valueOf(jsonNode.get("kakao_account").get("profile").get("profile_image_url"));
             socialDto.setImageUrl(imageUrl.substring(1, imageUrl.length() - 1));
+            Long id = Long.valueOf(jsonNode.get("id").asLong());
+            socialDto.setId(id); // 2245194061
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

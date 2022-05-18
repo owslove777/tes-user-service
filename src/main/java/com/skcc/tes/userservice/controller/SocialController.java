@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -29,7 +29,6 @@ public class SocialController {
 
     @PostMapping("/users/login/{provider}")
     public ResponseEntity socialLogin(@PathVariable String provider,
-                                      @RequestBody(required = false) UserDto userDto,
                                       @RequestParam String code,
                                       HttpServletResponse response){
 
@@ -42,19 +41,21 @@ public class SocialController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
-        List<User> users = userRepository.findByEmail(socialDto.getEmail());
+        Optional<User> users = userRepository.findById(socialDto.getId());
 
         // 서비스에 등록된 회원이 아니라면
         if (users.isEmpty()) {
-            userDto.setEmail(socialDto.getEmail());
-            userDto.setName(socialDto.getName());
-            userDto.setImageUrl(socialDto.getImageUrl());
-            userDto.setPwd(UUID.randomUUID().toString());
+//            UserDto userDto = new UserDto();
+//            userDto.setId(socialDto.getId());
+//            userDto.setName(socialDto.getName());
+//            userDto.setImageUrl(socialDto.getImageUrl());
             User userEntity = User.builder()
-                    .email(userDto.getEmail())
-                    .pwd(userDto.getPwd())
-                    .userId(userDto.getUserId())
-                    .imageUrl(userDto.getImageUrl())
+                    .id(socialDto.getId())
+//                    .userType(userDto.getUserType())
+                    .imageUrl(socialDto.getImageUrl())
+                    .name(socialDto.getName())
+//                    .status(userDto.getStatus())
+//                    .address(userDto.getAddress())
                     .build();
             // 회원가입
             userRepository.save(userEntity);

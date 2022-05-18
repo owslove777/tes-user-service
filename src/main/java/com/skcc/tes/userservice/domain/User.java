@@ -4,6 +4,7 @@ package com.skcc.tes.userservice.domain;
 import com.skcc.tes.userservice.UserCreated;
 import com.skcc.tes.userservice.UserServiceApplication;
 import com.skcc.tes.userservice.dto.UserDto;
+import com.skcc.tes.userservice.enums.USER_TYPE;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 
@@ -19,16 +20,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
-    private String email;
-    private String name;
-    private String pwd;
-    private String userId;
+    @Id // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // 사용자 고유 ID
+    private String name;    // 사용자 닉네임
     private String status;
     private String imageUrl;
-
+    private String address; // 주소
+    private USER_TYPE userType;
 
 
     @PostPersist
@@ -37,7 +35,7 @@ public class User {
         UserCreated userCreated = new UserCreated();
         userCreated.setStatus("valid");
         this.setStatus("valid");
-        userCreated.setUserId(this.getUserId());
+//        userCreated.setUserId(this.getUserId());
         BeanUtils.copyProperties(this,userCreated);
         userCreated.publishAfterCommit();
         System.out.println("sending data=" + userCreated);
@@ -47,12 +45,13 @@ public class User {
     public UserDto toDto(){
 
         return UserDto.builder()
-                        .email(email)
-                        .name(name)
-                        .pwd(pwd)
-                        .userId(userId)
-                        .status(status)
-                        .build();
+                .id(id)
+                .name(name)
+                .status(status)
+                .userType(userType)
+                .imageUrl(imageUrl)
+                .address(address)
+                .build();
     }
 
     public UserDto save() {

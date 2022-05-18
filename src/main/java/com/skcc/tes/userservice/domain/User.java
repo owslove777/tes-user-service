@@ -27,6 +27,7 @@ public class User {
     private String imageUrl;
     private String address; // 주소
     private USER_TYPE userType;
+    private String email;
 
 
     @PostPersist
@@ -51,6 +52,7 @@ public class User {
                 .userType(userType)
                 .imageUrl(imageUrl)
                 .address(address)
+                .email(email)
                 .build();
     }
 

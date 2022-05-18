@@ -4,11 +4,13 @@ package com.skcc.tes.userservice.domain;
 import com.skcc.tes.userservice.UserCreated;
 import com.skcc.tes.userservice.UserServiceApplication;
 import com.skcc.tes.userservice.dto.UserDto;
-import com.skcc.tes.userservice.enums.USER_TYPE;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PostPersist;
+import javax.persistence.Table;
 
 
 @Entity(name = "tes_user")
@@ -26,7 +28,8 @@ public class User {
     private String status;
     private String imageUrl;
     private String address; // 주소
-    private USER_TYPE userType;
+//    private USER_TYPE userType;
+    private String userType;
     private String email;
 
 

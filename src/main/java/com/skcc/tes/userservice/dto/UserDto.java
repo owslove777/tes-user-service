@@ -1,6 +1,5 @@
 package com.skcc.tes.userservice.dto;
 
-import com.skcc.tes.userservice.enums.USER_TYPE;
 import lombok.*;
 
 @Getter
@@ -18,6 +17,6 @@ public class UserDto {
     private String status;
     private String imageUrl;
     private String address; // 주소
-    private USER_TYPE userType;
-
+//    private USER_TYPE userType;
+    private String userType;
 }

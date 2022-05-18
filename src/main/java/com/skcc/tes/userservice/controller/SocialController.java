@@ -4,19 +4,19 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.skcc.tes.userservice.domain.User;
 import com.skcc.tes.userservice.domain.UserRepository;
-import com.skcc.tes.userservice.dto.UserDto;
 import com.skcc.tes.userservice.oauth.SocialDto;
 import com.skcc.tes.userservice.oauth.SocialService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +25,6 @@ public class SocialController {
     private final SocialService socialService;
     private final UserRepository userRepository;
 //    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final Environment env;
 
     @PostMapping("/users/login/{provider}")
     public ResponseEntity socialLogin(@PathVariable String provider,
@@ -64,12 +63,12 @@ public class SocialController {
         // JWT 토큰 생성
         String token = JWT.create()
                 .withSubject("JwtToken")
-                .withExpiresAt(new Date(System.currentTimeMillis() + Long.parseLong(env.getProperty("tes.token.expiration_time"))))
-                .withClaim("email", socialDto.getEmail())
-                .sign(Algorithm.HMAC512(env.getProperty("tes.token.secret")));
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000000000L))
+                .withClaim("id", socialDto.getId())
+                .sign(Algorithm.HMAC512("SECRET"));
 
         // JWT 토큰 헤더에 담아 전달
-        response.addHeader(env.getProperty("tes.token.header"), env.getProperty("tes.token.prefix") + token);
+        response.addHeader("JWT_TOKEN", "PREFIX_" + token);
 
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -35,6 +35,14 @@ spring:
     username: root
     password: admin
     driverClassName: com.mysql.cj.jdbc.Driver
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+
+
 tes:
   token:
     expiration_time: 1000000000

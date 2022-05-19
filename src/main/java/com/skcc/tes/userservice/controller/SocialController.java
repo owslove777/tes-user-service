@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -29,31 +30,24 @@ public class SocialController {
     public ResponseEntity<UserDto> socialLogin(@PathVariable String provider,
                                                @RequestParam String code,
                                                HttpServletResponse response){
-        User savedUser = null;
-        SocialDto socialDto = null;
+        User savedUser;
+        SocialDto socialDto;
 
         if (provider.equals("kakao")) {
             socialDto = socialService.verificationKakao(code);
         }
         else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
         Optional<User> users = userRepository.findById(socialDto.getId());
 
         // 서비스에 등록된 회원이 아니라면
         if (users.isEmpty()) {
-//            UserDto userDto = new UserDto();
-//            userDto.setId(socialDto.getId());
-//            userDto.setName(socialDto.getName());
-//            userDto.setImageUrl(socialDto.getImageUrl());
             User userEntity = User.builder()
                     .id(socialDto.getId())
-//                    .userType(userDto.getUserType())
                     .imageUrl(socialDto.getImageUrl())
                     .name(socialDto.getName())
-//                    .status(userDto.getStatus())
-//                    .address(userDto.getAddress())
                     .build();
             // 회원가입
             savedUser = userRepository.save(userEntity);
@@ -72,5 +66,25 @@ public class SocialController {
         response.addHeader("JWT_TOKEN", "PREFIX_" + token);
 
         return new ResponseEntity<>(savedUser.toDto(), HttpStatus.OK);
+    }
+
+
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<UserDto> changeUser(@PathVariable Long userId, @RequestBody User user) {
+        if (!Objects.equals(userId, user.getId())) {
+            return new ResponseEntity<>(null, HttpStatus.PRECONDITION_FAILED);
+        }
+        Optional<User> byId = userRepository.findById(user.getId());
+        if (byId.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.PRECONDITION_FAILED);
+        }
+        User saved = userRepository.save(user);
+        return new ResponseEntity<>(saved.toDto(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) {
+        userRepository.deleteById(userId);
+        return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
     }
 }

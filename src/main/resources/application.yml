@@ -35,6 +35,10 @@ spring:
     username: root
     password: admin
     driverClassName: com.mysql.cj.jdbc.Driver
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true # put / delete method enabled
 
 
 #management:

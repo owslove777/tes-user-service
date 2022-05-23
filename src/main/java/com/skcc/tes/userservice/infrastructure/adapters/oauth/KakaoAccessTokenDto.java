@@ -1,4 +1,4 @@
-package com.skcc.tes.userservice.oauth;
+package com.skcc.tes.userservice.infrastructure.adapters.oauth;
 
 import lombok.Data;
 

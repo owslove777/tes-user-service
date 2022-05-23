@@ -1,9 +1,10 @@
-package com.skcc.tes.userservice.domain;
+package com.skcc.tes.userservice.infrastructure.entity;
 
 
-import com.skcc.tes.userservice.UserCreated;
+import com.skcc.tes.userservice.infrastructure.adapters.kafka.UserCreated;
 import com.skcc.tes.userservice.UserServiceApplication;
-import com.skcc.tes.userservice.dto.UserDto;
+import com.skcc.tes.userservice.domain.data.UserDto;
+import com.skcc.tes.userservice.infrastructure.repository.UserRepository;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 

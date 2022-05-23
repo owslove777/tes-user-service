@@ -1,12 +1,12 @@
-package com.skcc.tes.userservice.controller;
+package com.skcc.tes.userservice.application.controller;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.skcc.tes.userservice.domain.User;
-import com.skcc.tes.userservice.domain.UserRepository;
-import com.skcc.tes.userservice.dto.UserDto;
-import com.skcc.tes.userservice.oauth.SocialDto;
-import com.skcc.tes.userservice.oauth.SocialService;
+import com.skcc.tes.userservice.domain.ports.api.UserServicePort;
+import com.skcc.tes.userservice.domain.ports.spi.SocialServicePort;
+import com.skcc.tes.userservice.infrastructure.entity.User;
+import com.skcc.tes.userservice.domain.data.UserDto;
+import com.skcc.tes.userservice.domain.data.SocialDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SocialController {
 
-    private final SocialService socialService;
-    private final UserRepository userRepository;
+    private final SocialServicePort socialService;
+    private final UserServicePort userService;
+//    private final UserRepository userRepository;
 //    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/users/login/{provider}")
@@ -34,13 +35,13 @@ public class SocialController {
         SocialDto socialDto;
 
         if (provider.equals("kakao")) {
-            socialDto = socialService.verificationKakao(code);
+            socialDto = socialService.verification(code);
         }
         else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        Optional<User> users = userRepository.findById(socialDto.getId());
+        Optional<User> users = userService.findById(socialDto.getId());
 
         // 서비스에 등록된 회원이 아니라면
         if (users.isEmpty()) {
@@ -50,7 +51,7 @@ public class SocialController {
                     .name(socialDto.getName())
                     .build();
             // 회원가입
-            savedUser = userRepository.save(userEntity);
+            savedUser = userService.save(userEntity);
         } else {
             savedUser = users.get();
         }
@@ -74,17 +75,17 @@ public class SocialController {
         if (!Objects.equals(userId, user.getId())) {
             return new ResponseEntity<>(null, HttpStatus.PRECONDITION_FAILED);
         }
-        Optional<User> byId = userRepository.findById(user.getId());
+        Optional<User> byId = userService.findById(user.getId());
         if (byId.isEmpty()){
             return new ResponseEntity<>(null, HttpStatus.PRECONDITION_FAILED);
         }
-        User saved = userRepository.save(user);
+        User saved = userService.save(user);
         return new ResponseEntity<>(saved.toDto(), HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable Long userId) {
-        userRepository.deleteById(userId);
+        userService.deleteById(userId);
         return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
     }
 }

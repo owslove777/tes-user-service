@@ -1,4 +1,4 @@
-package com.skcc.tes.userservice.enums;
+package com.skcc.tes.userservice.domain.enums;
 
 public enum USER_TYPE {
 //    UNDEFINED(null),

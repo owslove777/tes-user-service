@@ -1,14 +1,11 @@
-package com.skcc.tes.userservice.controller;
+package com.skcc.tes.userservice.application.controller;
 
-import com.skcc.tes.userservice.domain.User;
-import com.skcc.tes.userservice.domain.UserRepository;
-import com.skcc.tes.userservice.dto.UserDto;
-import com.skcc.tes.userservice.kafka.KafkaProcessor;
+import com.skcc.tes.userservice.domain.ports.api.UserServicePort;
+import com.skcc.tes.userservice.infrastructure.entity.User;
+import com.skcc.tes.userservice.infrastructure.repository.UserRepository;
+import com.skcc.tes.userservice.domain.data.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,14 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-
-    private final UserRepository userRepository;
+    private final UserServicePort userService;
+//    private final UserRepository userRepository;
 
     @GetMapping("/health_check")
     public String status() {
@@ -40,14 +36,7 @@ public class UserController {
 
     @GetMapping("/users")
     public List<UserDto> getUsers(){
-        Iterable<User> userList  = userRepository.findAll();
-
-        List<UserDto> result = new ArrayList<>();
-
-        userList.forEach(v -> result.add(new ModelMapper().map(v, UserDto.class)));
-
-        return result;
-
+        return userService.getAllUsers();
     }
 
 }

@@ -1,6 +1,5 @@
-package com.skcc.tes.userservice;
+package com.skcc.tes.userservice.infrastructure.adapters.kafka;
 
-import com.skcc.tes.userservice.AbstractEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

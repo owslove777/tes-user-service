@@ -1,19 +1,21 @@
-package com.skcc.tes.userservice.oauth;
+package com.skcc.tes.userservice.infrastructure.adapters.oauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skcc.tes.userservice.domain.data.SocialDto;
+import com.skcc.tes.userservice.domain.ports.spi.SocialServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SocialService {
+public class KakaoSocialServiceAdapter implements SocialServicePort {
 
     private final KakaoService kakaoService;
     private final ObjectMapper objectMapper;
 
-    public SocialDto verificationKakao(String code){
+    public SocialDto verification(String code){
 
         SocialDto socialDto = new SocialDto();
         // 코드를 이용하여 accessToken 추출
@@ -29,7 +31,7 @@ public class SocialService {
             socialDto.setName(name.substring(1, name.length() - 1));
             String imageUrl = String.valueOf(jsonNode.get("kakao_account").get("profile").get("profile_image_url"));
             socialDto.setImageUrl(imageUrl.substring(1, imageUrl.length() - 1));
-            Long id = Long.valueOf(jsonNode.get("id").asLong());
+            Long id = jsonNode.get("id").asLong();
             socialDto.setId(id); // 2245194061
         } catch (JsonProcessingException e) {
             e.printStackTrace();

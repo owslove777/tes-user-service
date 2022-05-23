@@ -1,8 +1,9 @@
-package com.skcc.tes.userservice;
+package com.skcc.tes.userservice.infrastructure.adapters.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.skcc.tes.userservice.kafka.KafkaProcessor;
+import com.skcc.tes.userservice.UserServiceApplication;
+import com.skcc.tes.userservice.domain.ports.spi.UserMessagePort;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
@@ -10,7 +11,7 @@ import org.springframework.transaction.support.TransactionSynchronizationAdapter
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.MimeTypeUtils;
 
-public class AbstractEvent {
+public class AbstractEvent implements UserMessagePort {
 
     String eventType;
     Long timestamp;

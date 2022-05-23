@@ -1,4 +1,4 @@
-package com.skcc.tes.userservice.oauth;
+package com.skcc.tes.userservice.infrastructure.adapters.oauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 public class KakaoService {
 
     private final RestTemplate restTemplate;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final String REST_API_KEY = "7fa8c3142d5428f67936a85a1ab0eaf7";
     private final String REDIRECT_URI = "http://clouddance.hrd-edu.cloudzcp.com/oauth/kakao/callback"; // "http://localhost:3000/oauth/kakao/callback";

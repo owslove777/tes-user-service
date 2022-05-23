@@ -1,4 +1,4 @@
-package com.skcc.tes.userservice.config;
+package com.skcc.tes.userservice.application.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

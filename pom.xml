@@ -101,6 +101,12 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
+		<!--Mapper -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.4.2.Final</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

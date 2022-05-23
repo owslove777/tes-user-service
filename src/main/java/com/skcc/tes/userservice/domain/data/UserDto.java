@@ -1,4 +1,4 @@
-package com.skcc.tes.userservice.dto;
+package com.skcc.tes.userservice.domain.data;
 
 import lombok.*;
 

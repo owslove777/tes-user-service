@@ -1,4 +1,4 @@
-package com.skcc.tes.userservice;
+package com.skcc.tes.userservice.infrastructure.adapters.kafka;
 
 import org.springframework.stereotype.Service;
 

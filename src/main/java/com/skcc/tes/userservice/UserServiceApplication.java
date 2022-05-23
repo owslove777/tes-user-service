@@ -1,12 +1,11 @@
 package com.skcc.tes.userservice;
 
 
-import com.skcc.tes.userservice.kafka.KafkaProcessor;
+import com.skcc.tes.userservice.infrastructure.adapters.kafka.KafkaProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @EnableBinding(KafkaProcessor.class)

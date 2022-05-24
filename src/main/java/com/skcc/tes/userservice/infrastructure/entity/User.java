@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 
 @Entity(name = "tes_user")
@@ -48,7 +50,6 @@ public class User {
     }
 
     public UserDto toDto(){
-
         return UserDto.builder()
                 .id(id)
                 .name(name)
@@ -58,6 +59,21 @@ public class User {
                 .address(address)
                 .email(email)
                 .build();
+    }
+    public static UserDto toDto(User user) {
+        return UserDto.builder()
+                .id(user.id)
+                .name(user.name)
+                .status(user.status)
+                .userType(user.userType)
+                .imageUrl(user.imageUrl)
+                .address(user.address)
+                .email(user.email)
+                .build();
+    }
+
+    public static Collection<UserDto> toDtoList(Collection<User> userIterable) {
+        return userIterable.stream().map(u -> u.toDto()).collect(Collectors.toList());
     }
 
     public UserDto save() {

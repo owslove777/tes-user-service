@@ -4,12 +4,11 @@ import com.skcc.tes.userservice.domain.data.UserDto;
 import com.skcc.tes.userservice.domain.ports.spi.UserPersistencePort;
 import com.skcc.tes.userservice.infrastructure.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserServicePort{
     private final UserPersistencePort userPersistencePort;

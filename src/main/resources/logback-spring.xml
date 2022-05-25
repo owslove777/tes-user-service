@@ -1,61 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="true" scan="true">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
-    <!-- 로그파일 저장 경로 -->
-    <property name="LOG_DIR" value="logs/logback" />
+    <property name="LOG_DIR" value="../logs" />
+    <property name="FILE_NAME" value="user" />
+    <property name="CMN_FILE_NAME" value="user-cmn" />
+    <property name="ERROR_FILE_NAME" value="user-error" />
+    <property name="IF_FILE_NAME" value="user-if" />
 
-    <!-- CONSOLE -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
-                [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} : %30logger{5} - %msg%n
-            </Pattern>
-        </layout>
-    </appender>
-    <!-- // CONSOLE -->
-    <!-- SYSLOG -->
-    <appender name="SYSLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/syslog/syslog.log</file>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
-                [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} : %30logger{5} - %msg%n
-            </Pattern>
-        </layout>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/syslog/syslog.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+    <!-- FILE Appender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${FILE_NAME}.log</file>
+        <!-- 일자별 로그파일 저장 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${FILE_NAME}_%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <!-- 일자별 로그파일 저장 기간 설정 -->
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level [%thread][TraceID:%X{X-B3-TraceId},SpanID:%X{X-B3-SpanId}] %logger.%M\(:%L\) - %msg%n</pattern>
+        </encoder>
     </appender>
-    <!-- // SYSLOG -->
-    <!-- ACCESSLOG -->
-    <appender name="ACCESSLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/accesslog/accesslog.log</file>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
-                %msg%n
-            </Pattern>
-        </layout>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/accesslog/accesslog.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-    </appender>
-    <!-- // ACCESSLOG -->
 
-    <root level="info">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="SYSLOG" />
+    <appender name="CMN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${CMN_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${CMN_FILE_NAME}_%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level [%thread][TraceID:%X{X-B3-TraceId},SpanID:%X{X-B3-SpanId}] %logger.%M\(:%L\) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${ERROR_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${ERROR_FILE_NAME}_%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level [%thread][TraceID:%X{X-B3-TraceId},SpanID:%X{X-B3-SpanId}] %logger.%M\(:%L\) - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+    </appender>
+
+    <appender name="IF_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${IF_FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${IF_NAME}_%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level [%thread][TraceID:%X{X-B3-TraceId},SpanID:%X{X-B3-SpanId}] %logger.%M\(:%L\) - %msg%n</pattern>
+        </encoder>
+        <filter class="com.miip.spc.cmn.aspect.LogbackFilter">
+        </filter>
+    </appender>
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- [2018-08-17] [15:24:21.355] [log level] [logName]      [class.java line]       [message] -->
+            <!--     날짜           시간       로그레벨    로거이름   로그인클래스.java 몇번째줄    로그메세지 -->
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}:%-3relative] %highlight(%-5level) [%thread][TraceID:%X{X-B3-TraceId},SpanID:%X{X-B3-SpanId}] %logger.%M\(:%L\) - %msg%n</pattern>
+        </layout>
+    </appender>
+
+
+    <!-- CMN -->
+    <logger name="org.hibernate.SQL" additivity="FALSE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.hibernate.type" additivity="FALSE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.springframework" additivity="FALSE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.thymeleaf" additivity="FALSE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.quartz.core" additivity="FALSE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.elasticsearch" additivity="FALSE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+
+    <!-- 모든 로그 출력 (파일/콘솔) -->
+    <root>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+        <appender-ref ref="IF_FILE" />
+        <appender-ref ref="STDOUT"/>
     </root>
-    <logger name="com.example.logbackStudy" level="debug" additivity="false">
-        <appender-ref ref="CONSOLE" />
-    </logger>
-    <logger name="access-log" level="info" additivity="false">
-        <appender-ref ref="ACCESSLOG" />
-    </logger>
 
 
 </configuration>

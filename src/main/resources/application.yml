@@ -56,4 +56,8 @@ spring:
 #logging:
 #  level:
 #    org.hibernate.type: trace
+#    org.springframework: INFO
 #    org.springframework.cloud: debug
+#    org.springframework.web: DEBUG
+logging:
+  config: classpath:logback-spring.xml

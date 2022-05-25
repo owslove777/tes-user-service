@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="true" scan="true">
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
@@ -79,6 +79,8 @@
         <encoder>
             <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level [%thread][TraceID:%X{X-B3-TraceId},SpanID:%X{X-B3-SpanId}] %logger.%M\(:%L\) - %msg%n</pattern>
         </encoder>
+        <filter class="com.skcc.tes.userservice.application.config.LoggingFilter">
+        </filter>
     </appender>
 
 

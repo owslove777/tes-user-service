@@ -61,3 +61,6 @@ spring:
 #    org.springframework.web: DEBUG
 logging:
   config: classpath:logback-spring.xml
+  level:
+    org.apache.kafka: info
+    org.springframework.kafka.listener: info

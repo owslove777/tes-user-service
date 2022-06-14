@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS})
 @RequiredArgsConstructor
 public class SocialController {
 

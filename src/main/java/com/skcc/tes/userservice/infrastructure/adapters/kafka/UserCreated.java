@@ -12,5 +12,6 @@ import lombok.Setter;
 public class UserCreated extends AbstractEvent {
 
     private String userId;
+    private String userNm;
     private String status;
 }

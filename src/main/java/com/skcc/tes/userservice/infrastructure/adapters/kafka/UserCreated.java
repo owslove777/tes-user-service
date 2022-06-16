@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserCreated extends AbstractEvent {
 
-    private String userId;
+    private Long userId;
     private String userNm;
     private String status;
 }

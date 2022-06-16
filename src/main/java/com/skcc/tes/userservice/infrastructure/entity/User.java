@@ -1,12 +1,11 @@
 package com.skcc.tes.userservice.infrastructure.entity;
 
 
-import com.skcc.tes.userservice.infrastructure.adapters.kafka.UserCreated;
 import com.skcc.tes.userservice.UserServiceApplication;
 import com.skcc.tes.userservice.domain.data.UserDto;
+import com.skcc.tes.userservice.infrastructure.adapters.kafka.UserCreated;
 import com.skcc.tes.userservice.infrastructure.repository.UserRepository;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -41,9 +40,8 @@ public class User {
 
         UserCreated userCreated = new UserCreated();
         userCreated.setStatus("valid");
-        this.setStatus("valid");
-//        userCreated.setUserId(this.getUserId());
-        BeanUtils.copyProperties(this,userCreated);
+        userCreated.setUserId(id);
+        userCreated.setUserNm(name);
         userCreated.publishAfterCommit();
         System.out.println("sending data=" + userCreated);
 

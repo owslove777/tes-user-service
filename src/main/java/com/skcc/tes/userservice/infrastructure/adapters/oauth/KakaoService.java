@@ -3,6 +3,7 @@ package com.skcc.tes.userservice.infrastructure.adapters.oauth;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,7 +21,8 @@ public class KakaoService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final String REST_API_KEY = "7fa8c3142d5428f67936a85a1ab0eaf7";
-    private final String REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback"; // "http://clouddance.hrd-edu.cloudzcp.com/oauth/kakao/callback";
+    @Value("${clouddance.redirect-uri}")
+    private final String REDIRECT_URI = ""; //"http://localhost:3000/oauth/kakao/callback"; // "http://clouddance.hrd-edu.cloudzcp.com/oauth/kakao/callback";
 
     public String getAccessTokenByCode(String code) {
 

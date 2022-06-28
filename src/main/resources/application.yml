@@ -64,3 +64,8 @@ logging:
   level:
     org.apache.kafka: info
     org.springframework.kafka.listener: info
+server:
+  port: 8081
+
+clouddance:
+  redirect-uri: http://localhost:3000/oauth/kakao/callback

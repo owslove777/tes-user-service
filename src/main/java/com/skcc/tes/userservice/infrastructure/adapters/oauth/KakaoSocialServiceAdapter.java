@@ -15,11 +15,12 @@ public class KakaoSocialServiceAdapter implements SocialServicePort {
     private final KakaoService kakaoService;
     private final ObjectMapper objectMapper;
 
-    public SocialDto verification(String code){
+    @Override
+    public SocialDto verification(String code, boolean isLocal){
 
         SocialDto socialDto = new SocialDto();
         // 코드를 이용하여 accessToken 추출
-        String accessToken = kakaoService.getAccessTokenByCode(code);
+        String accessToken = kakaoService.getAccessTokenByCode(code, isLocal);
         // accessToken을 이용하여 사용자 정보 추출
         String userInfo = kakaoService.getUserInfoByAccessToken(accessToken);
 

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Objects;
@@ -30,12 +31,14 @@ public class SocialController {
     @GetMapping("/users/login/{provider}")
     public ResponseEntity<UserDto> socialLogin(@PathVariable String provider,
                                                @RequestParam String code,
+                                               HttpServletRequest request,
                                                HttpServletResponse response){
         User savedUser;
         SocialDto socialDto;
 
         if (provider.equals("kakao")) {
-            socialDto = socialService.verification(code);
+            boolean isLocal = request.getRequestURL().toString().contains("localhost");
+            socialDto = socialService.verification(code, isLocal);
         }
         else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

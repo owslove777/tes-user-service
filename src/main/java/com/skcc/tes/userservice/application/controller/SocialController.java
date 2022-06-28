@@ -37,7 +37,7 @@ public class SocialController {
         SocialDto socialDto;
 
         if (provider.equals("kakao")) {
-            boolean isLocal = request.getRequestURL().toString().contains("localhost");
+            boolean isLocal = request.getLocalPort() == 8081; // 임시방편
             socialDto = socialService.verification(code, isLocal);
         }
         else {

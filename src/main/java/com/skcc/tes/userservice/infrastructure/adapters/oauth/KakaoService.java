@@ -32,10 +32,9 @@ public class KakaoService {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", REST_API_KEY);
+        params.add("redirect_uri", REDIRECT_URI);
         params.add("code", code);
         params.add("client_secret", "");
-        params.add("redirect_uri", isLocal ? REDIRECT_URI : "http://clouddance.hrd-edu.cloudzcp.com/oauth/kakao/callback");
-
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 

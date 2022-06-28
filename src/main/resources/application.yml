@@ -69,3 +69,10 @@ server:
 
 clouddance:
   redirect-uri: http://localhost:3000/oauth/kakao/callback
+
+---
+spring:
+  profiles: custom, dev, common
+
+clouddance:
+  redirect-uri: http://clouddance.hrd-edu.cloudzcp.com/oauth/kakao/callback

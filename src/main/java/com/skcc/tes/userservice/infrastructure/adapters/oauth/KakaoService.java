@@ -22,17 +22,18 @@ public class KakaoService {
 
     private final String REST_API_KEY = "7fa8c3142d5428f67936a85a1ab0eaf7";
     @Value("${clouddance.redirect-uri}")
-    private final String REDIRECT_URI = ""; //"http://localhost:3000/oauth/kakao/callback"; // "http://clouddance.hrd-edu.cloudzcp.com/oauth/kakao/callback";
+    private final String REDIRECT_URI_CLOUD = "http://clouddance.hrd-edu.cloudzcp.com/oauth/kakao/callback"; //"http://localhost:3000/oauth/kakao/callback"; // "http://clouddance.hrd-edu.cloudzcp.com/oauth/kakao/callback";
+    private final String REDIRECT_URI_LOCAL = "http://localhost:3000/oauth/kakao/callback";
 
     public String getAccessTokenByCode(String code, boolean isLocal) {
-
+        String kakaoRedirectUri = isLocal ? REDIRECT_URI_LOCAL : REDIRECT_URI_CLOUD;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", REST_API_KEY);
-        params.add("redirect_uri", REDIRECT_URI);
+        params.add("redirect_uri", REDIRECT_URI_CLOUD);
         params.add("code", code);
         params.add("client_secret", "");
 

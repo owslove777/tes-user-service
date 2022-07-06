@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -37,4 +38,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/users/{id}")
+    public UserDto getUserById(@PathVariable Long id){
+        Optional<User> byId = userService.findById(id);
+        if (byId.isEmpty()){
+            return null;
+        }
+        return byId.get().toDto();
+    }
 }
